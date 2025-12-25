@@ -11,6 +11,13 @@ export default function CareerAccordion() {
     setActiveStepIndex((prev) => (prev === index ? null : index));
   };
 
+  const setStepData = (index: number) => {
+    // Only allow hover to set state on desktop (md breakpoint is 768px in Tailwind)
+    if (window.innerWidth >= 768) {
+      setActiveStepIndex(index);
+    }
+  };
+
   return (
     <section className="bg-[#0c0c0c] py-15 px-5 max-w-300 mx-auto text-white relative z-20">
       <div className="flex flex-col gap-4">
@@ -29,6 +36,7 @@ export default function CareerAccordion() {
               step={step}
               isActive={activeStepIndex === index}
               onToggle={() => toggleStep(index)}
+              onHover={() => setStepData(index)}
             />
           ))}
         </div>
@@ -41,10 +49,12 @@ function CareerStepItem({
   step,
   isActive,
   onToggle,
+  onHover,
 }: {
   step: CareerStep;
   isActive: boolean;
   onToggle: () => void;
+  onHover: () => void;
 }) {
   const [activeTabId, setActiveTabId] = useState<string>(step.tabs[0].id);
   const [activeMobileTabId, setActiveMobileTabId] = useState<string | null>(
@@ -65,6 +75,7 @@ function CareerStepItem({
         "bg-white/3 border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 hover:bg-white/5",
         isActive && "bg-white/8 border-white/20"
       )}
+      onMouseEnter={onHover}
     >
       <div
         className="flex items-center p-6 sm:p-8 cursor-pointer justify-between gap-4 relative"
@@ -116,107 +127,111 @@ function CareerStepItem({
 
       <div
         className={clsx(
-          "border-t border-white/10 px-8 pb-8 animate-[slideDown_0.3s_ease-out]",
-          isActive ? "block" : "hidden"
+          "grid transition-[grid-template-rows] duration-500 ease-in-out",
+          isActive ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
         )}
       >
-        <div className="mt-6">
-          <h3 className="text-[0.9rem] uppercase tracking-[1px] text-white/50 mb-4">
-            Professional Roles
-          </h3>
-          <div className="flex flex-wrap gap-3 mb-8">
-            {step.roles.map((role) => (
-              <span
-                key={role}
-                className="bg-white/10 text-white px-4 py-2 rounded-full text-[0.9rem] transition-colors hover:bg-white/20 cursor-default"
-              >
-                {role}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Tabs block */}
-        <div>
-          {/* Desktop Tabs Header */}
-          <ul className="hidden md:flex list-none p-0 m-0 mb-6 border-b border-white/10 overflow-x-auto">
-            {step.tabs.map((tab) => (
-              <li key={tab.id} className="mr-8 shrink-0">
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setActiveTabId(tab.id);
-                  }}
-                  className={clsx(
-                    "text-white/50 pb-4 block font-medium border-b-2 border-transparent transition-all duration-300 hover:text-white bg-transparent cursor-pointer",
-                    activeTabId === tab.id && "text-white! border-white!"
-                  )}
-                >
-                  {tab.label}
-                </button>
-              </li>
-            ))}
-          </ul>
-
-          {/* Tab Content (Desktop & Mobile Mixed Logic) */}
-          <div className="block">
-            {step.tabs.map((tab) => (
-              <div
-                key={tab.id}
-                className={clsx(
-                  activeTabId === tab.id ? "md:block" : "md:hidden" // Desktop toggle logic
-                )}
-              >
-                {/* Mobile Accordion Opener */}
-                <a
-                  href="#"
-                  onClick={(e) => handleMobileTabToggle(tab.id, e)}
-                  className={clsx(
-                    "flex md:hidden justify-between items-center bg-white/5 p-4 rounded-lg text-white no-underline font-medium text-[0.95rem] transition-colors mb-2",
-                    activeMobileTabId === tab.id &&
-                      "bg-white/10 rounded-b-none mb-0"
-                  )}
-                >
-                  {tab.label}
-                  <span className="text-[1.2rem] text-white/50">
-                    {activeMobileTabId === tab.id ? "−" : "+"}
+        <div className="overflow-hidden min-h-0">
+          <div className="border-t border-white/10 px-8 pb-8 mt-4 pt-8">
+            <div className="mt-6">
+              <h3 className="text-[0.9rem] uppercase tracking-[1px] text-white/50 mb-4">
+                Professional Roles
+              </h3>
+              <div className="flex flex-wrap gap-3 mb-8">
+                {step.roles.map((role) => (
+                  <span
+                    key={role}
+                    className="bg-white/10 text-white px-4 py-2 rounded-full text-[0.9rem] transition-colors hover:bg-white/20 cursor-default"
+                  >
+                    {role}
                   </span>
-                </a>
-
-                {/* Content Details */}
-                <div
-                  className={clsx(
-                    "md:block", // Always visible in desktop if parent div is visible
-                    activeMobileTabId === tab.id
-                      ? "block p-4 bg-white/2 rounded-b-lg mb-2"
-                      : "hidden md:p-0 md:bg-transparent md:mb-0"
-                  )}
-                >
-                  <ul className="list-none p-0 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
-                    {tab.content.map((item, i) => (
-                      <li
-                        key={i}
-                        className="flex items-center text-white/80 before:content-['•'] before:text-[#a855f7] before:mr-2 before:text-[1.5rem] before:leading-none"
-                      >
-                        {typeof item === "string" ? (
-                          item
-                        ) : (
-                          <a
-                            href={item.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-inherit no-underline border-b border-white/20 transition-colors hover:border-white hover:text-white"
-                          >
-                            {item.label}
-                          </a>
-                        )}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Tabs block */}
+            <div>
+              {/* Desktop Tabs Header */}
+              <ul className="hidden md:flex list-none p-0 m-0 mb-6 border-b border-white/10 overflow-x-auto">
+                {step.tabs.map((tab) => (
+                  <li key={tab.id} className="mr-8 shrink-0">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setActiveTabId(tab.id);
+                      }}
+                      className={clsx(
+                        "text-white/50 pb-4 block font-medium border-b-2 border-transparent transition-all duration-300 hover:text-white bg-transparent cursor-pointer",
+                        activeTabId === tab.id && "text-white! border-white!"
+                      )}
+                    >
+                      {tab.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Tab Content (Desktop & Mobile Mixed Logic) */}
+              <div className="block">
+                {step.tabs.map((tab) => (
+                  <div
+                    key={tab.id}
+                    className={clsx(
+                      activeTabId === tab.id ? "md:block" : "md:hidden" // Desktop toggle logic
+                    )}
+                  >
+                    {/* Mobile Accordion Opener */}
+                    <a
+                      href="#"
+                      onClick={(e) => handleMobileTabToggle(tab.id, e)}
+                      className={clsx(
+                        "flex md:hidden justify-between items-center bg-white/5 p-4 rounded-lg text-white no-underline font-medium text-[0.95rem] transition-colors mb-2",
+                        activeMobileTabId === tab.id &&
+                          "bg-white/10 rounded-b-none mb-0"
+                      )}
+                    >
+                      {tab.label}
+                      <span className="text-[1.2rem] text-white/50">
+                        {activeMobileTabId === tab.id ? "−" : "+"}
+                      </span>
+                    </a>
+
+                    {/* Content Details */}
+                    <div
+                      className={clsx(
+                        "md:block", // Always visible in desktop if parent div is visible
+                        activeMobileTabId === tab.id
+                          ? "block p-4 bg-white/2 rounded-b-lg mb-2"
+                          : "hidden md:p-0 md:bg-transparent md:mb-0"
+                      )}
+                    >
+                      <ul className="list-none p-0 grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
+                        {tab.content.map((item, i) => (
+                          <li
+                            key={i}
+                            className="flex items-center text-white/80 before:content-['•'] before:text-[#a855f7] before:mr-2 before:text-[1.5rem] before:leading-none"
+                          >
+                            {typeof item === "string" ? (
+                              item
+                            ) : (
+                              <a
+                                href={item.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-inherit no-underline border-b border-white/20 transition-colors hover:border-white hover:text-white"
+                              >
+                                {item.label}
+                              </a>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
