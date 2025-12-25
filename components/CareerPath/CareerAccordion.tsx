@@ -12,7 +12,7 @@ export default function CareerAccordion() {
   };
 
   return (
-    <section className="bg-[#0c0c0c] py-[60px] px-5 max-w-[1200px] mx-auto text-white relative z-20">
+    <section className="bg-[#0c0c0c] py-15 px-5 max-w-300 mx-auto text-white relative z-20">
       <div className="flex flex-col gap-4">
         {/* Title removed from here as it seems to be duplicated or handled by CSS class .path-title in styles.css which was positioned absolutely?
             In original HTML: <h2 class="path-title">Path to Your Tech Future</h2> was outside the accordion wrapper but inside the section. 
@@ -70,7 +70,7 @@ function CareerStepItem({
         className="flex items-center p-6 sm:p-8 cursor-pointer justify-between gap-4 relative"
         onClick={onToggle}
       >
-        <div className="flex-shrink-0 pt-1">
+        <div className="shrink-0 pt-1">
           <div className="w-6 h-6">
             {/* Using img tag for external URL to avoid config requirements for now */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -97,7 +97,7 @@ function CareerStepItem({
         <div className="absolute right-5 top-6 sm:static sm:block">
           <div
             className={clsx(
-              "transition-transform duration-300 w-[14px]",
+              "transition-transform duration-300 w-3.5",
               isActive && "rotate-180"
             )}
           >
@@ -108,7 +108,7 @@ function CareerStepItem({
               width={14}
               height={8}
               alt="arrow"
-              className="brightness-0 invert w-[14px]"
+              className="brightness-0 invert w-3.5"
             />
           </div>
         </div>
@@ -141,7 +141,7 @@ function CareerStepItem({
           {/* Desktop Tabs Header */}
           <ul className="hidden md:flex list-none p-0 m-0 mb-6 border-b border-white/10 overflow-x-auto">
             {step.tabs.map((tab) => (
-              <li key={tab.id} className="mr-8 flex-shrink-0">
+              <li key={tab.id} className="mr-8 shrink-0">
                 <button
                   onClick={(e) => {
                     e.preventDefault();
@@ -150,7 +150,7 @@ function CareerStepItem({
                   }}
                   className={clsx(
                     "text-white/50 pb-4 block font-medium border-b-2 border-transparent transition-all duration-300 hover:text-white bg-transparent cursor-pointer",
-                    activeTabId === tab.id && "!text-white !border-white"
+                    activeTabId === tab.id && "text-white! border-white!"
                   )}
                 >
                   {tab.label}
@@ -165,7 +165,6 @@ function CareerStepItem({
               <div
                 key={tab.id}
                 className={clsx(
-                  "md:hidden", // Mobile view wrapper classes could be applied here
                   activeTabId === tab.id ? "md:block" : "md:hidden" // Desktop toggle logic
                 )}
               >
@@ -198,7 +197,7 @@ function CareerStepItem({
                     {tab.content.map((item, i) => (
                       <li
                         key={i}
-                        className="flex items-center text-white/80 before:content-['•'] before:text-[#a855f7] before:mr-2 before:text-[1.5rem] before:leading-[1]"
+                        className="flex items-center text-white/80 before:content-['•'] before:text-[#a855f7] before:mr-2 before:text-[1.5rem] before:leading-none"
                       >
                         {typeof item === "string" ? (
                           item
