@@ -89,7 +89,7 @@ function CareerStepItem({
       onMouseEnter={onHover}
     >
       <div
-        className="flex items-center p-6 sm:p-8 cursor-none justify-between gap-4 relative"
+        className="flex items-center p-6 sm:p-8 cursor-pointer justify-between gap-4 relative"
         onClick={onToggle}
       >
         <div className="shrink-0 pt-1">
@@ -152,7 +152,7 @@ function CareerStepItem({
                 {step.roles.map((role) => (
                   <span
                     key={role}
-                    className="bg-white/10 text-white px-4 py-2 rounded-full text-[0.9rem] transition-colors hover:bg-white/20 cursor-none"
+                    className="bg-white/10 text-white px-4 py-2 rounded-full text-[0.9rem] transition-colors hover:bg-white/20 cursor-pointer"
                   >
                     {role}
                   </span>
@@ -173,7 +173,7 @@ function CareerStepItem({
                         setActiveTabId(tab.id);
                       }}
                       className={clsx(
-                        "text-white/50 pb-4 block font-medium border-b-2 border-transparent transition-all duration-300 hover:text-white bg-transparent cursor-none",
+                        "text-white/50 pb-4 block font-medium border-b-2 border-transparent transition-all duration-300 hover:text-white bg-transparent cursor-pointer",
                         activeTabId === tab.id && "text-white! border-white!"
                       )}
                     >

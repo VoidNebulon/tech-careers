@@ -16,7 +16,7 @@ export default function Footer() {
         </div>
 
         <div className="relative z-20 m-4">
-          <p className="text-lg font-medium leading-6 tracking-[-0.5px] bg-linear-to-t from-[#8a4bbb] via-[#ffffff] to-[#ffffff] bg-clip-text text-transparent">
+          <p className="text-lg font-medium leading-6 tracking-[-0.5px] bg-linear-to-t from-[#ae5feb] via-[#b79bcd] to-[#e6bcf6] bg-clip-text text-transparent">
             &copy; 2025. All rights reserved by Ali.
           </p>
         </div>
