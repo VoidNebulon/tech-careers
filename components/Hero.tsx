@@ -73,11 +73,11 @@ function GlassCard({ title, text }: { title: string; text: string }) {
 
 function GradientButton() {
   return (
-    <div className="group relative inline-block p-[1.5px] bg-linear-to-br from-[#a855f7] to-[#6366f1] rounded-xl cursor-pointer transition-transform duration-300 shadow-none hover:-translate-y-0.5 hover:scale-102 hover:shadow-[0_10px_20px_rgba(0,0,0,0.4)] active:scale-98">
+    <div className="group relative inline-block p-[1.5px] bg-linear-to-br from-[#a855f7] to-[#6366f1] rounded-xl cursor-none transition-transform duration-300 shadow-none hover:-translate-y-0.5 hover:scale-102 hover:shadow-[0_10px_20px_rgba(0,0,0,0.4)] active:scale-98">
       {/* Blur effect */}
       <div className="absolute -inset-0.5 bg-linear-to-br from-[#a855f7] to-[#6366f1] rounded-[14px] -z-10 opacity-0 blur-xl transition-opacity duration-400 group-hover:opacity-60" />
 
-      <button className="text-[15px] font-semibold py-2.5 px-6 rounded-[11px] border-none bg-[#0c0c0c] text-white cursor-pointer flex items-center gap-2 transition-colors duration-300 relative z-10 group-hover:bg-transparent">
+      <button className="text-[15px] font-semibold py-2.5 px-6 rounded-[11px] border-none bg-[#0c0c0c] text-white cursor-none flex items-center gap-2 transition-colors duration-300 relative z-10 group-hover:bg-transparent">
         Download
       </button>
     </div>

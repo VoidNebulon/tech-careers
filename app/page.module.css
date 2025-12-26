@@ -78,7 +78,7 @@
   border-radius: 128px;
   border: 1px solid transparent;
   transition: 0.2s;
-  cursor: pointer;
+  cursor: none;
   width: fit-content;
   font-weight: 500;
 }
