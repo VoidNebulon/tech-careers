@@ -1,7 +1,6 @@
 import Hero from "@/components/Hero";
 import CareerAccordion from "@/components/CareerPath/CareerAccordion";
 import Footer from "@/components/Footer";
-import { SmoothCursor } from "@/components/ui/smooth-cursor"
 
 export default function Home() {
   return (
@@ -10,7 +9,6 @@ export default function Home() {
         <Hero />
         <CareerAccordion />
         <Footer />
-        <SmoothCursor />
       </main>
     </>
   );
