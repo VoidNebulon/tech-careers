@@ -95,14 +95,17 @@ export default function Hero() {
           <GlassCard
             title="Presentation"
             text="Access the complete information for in-depth guidance."
+            link="https://pgc.edu/wp-content/uploads/2025/10/Presentation.pdf"
           />
           <GlassCard
             title="Resources List"
             text="Get all the essential resources to aid your learning."
+            link="https://pgc.edu/wp-content/uploads/2024/10/ICS-Resources-by-PGC.pdf"
           />
           <GlassCard
             title="Universities List"
             text="Apply to universities offering top-notch programs."
+            link="https://pgc.edu/wp-content/uploads/2025/10/Universities-list.pdf"
           />
         </motion.div>
       </motion.div>
@@ -110,7 +113,15 @@ export default function Hero() {
   );
 }
 
-function GlassCard({ title, text }: { title: string; text: string }) {
+function GlassCard({
+  title,
+  text,
+  link,
+}: {
+  title: string;
+  text: string;
+  link: string;
+}) {
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -129,21 +140,26 @@ function GlassCard({ title, text }: { title: string; text: string }) {
         {text}
       </p>
       <div className="mt-auto flex justify-end">
-        <GradientButton />
+        <GradientButton link={link} />
       </div>
     </motion.div>
   );
 }
 
-function GradientButton() {
+function GradientButton({ link }: { link: string }) {
   return (
     <div className="group relative inline-block p-[1.5px] bg-linear-to-br from-[#a855f7] to-[#6366f1] rounded-xl cursor-pointer transition-transform duration-300 shadow-none hover:-translate-y-0.5 hover:scale-102 hover:shadow-[0_10px_20px_rgba(0,0,0,0.4)] active:scale-98">
       {/* Blur effect */}
       <div className="absolute -inset-0.5 bg-linear-to-br from-[#a855f7] to-[#6366f1] rounded-[14px] -z-10 opacity-0 blur-xl transition-opacity duration-400 group-hover:opacity-60" />
 
-      <button className="text-[15px] font-semibold py-2.5 px-6 rounded-[11px] border-none bg-[#0c0c0c] text-white cursor-pointer flex items-center gap-2 transition-colors duration-300 relative z-10 group-hover:bg-transparent">
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[15px] font-semibold py-2.5 px-6 rounded-[11px] border-none bg-[#0c0c0c] text-white cursor-pointer flex items-center gap-2 transition-colors duration-300 relative z-10 group-hover:bg-transparent no-underline"
+      >
         Download
-      </button>
+      </a>
     </div>
   );
 }
