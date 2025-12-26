@@ -85,9 +85,9 @@ export function SmoothCursor({
   cursor = <DefaultCursorSVG />,
   springConfig = {
     damping: 45,
-    stiffness: 600,
+    stiffness: 250,
     mass: 1,
-    restDelta: 0.01,
+    restDelta: 0.001,
   },
 }: SmoothCursorProps) {
   const [isMoving, setIsMoving] = useState(false);
