@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { useState } from "react";
 import { careerData, CareerStep } from "@/data/careerData";
 import clsx from "clsx";
@@ -25,9 +26,15 @@ export default function CareerAccordion() {
             In original HTML: <h2 class="path-title">Path to Your Tech Future</h2> was outside the accordion wrapper but inside the section. 
             I will render it here.
         */}
-        <h2 className="text-[clamp(2rem,4vw,3rem)] font-medium leading-[1.2] tracking-[-0.01em] text-center text-white -mt-32 mb-12 relative z-10 pointer-events-none">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1 }}
+          className="text-[clamp(2rem,4vw,3rem)] font-medium leading-[1.2] tracking-[-0.01em] text-center text-white -mt-32 mb-12 relative z-10 pointer-events-none"
+        >
           Path to Your Tech Future
-        </h2>
+        </motion.h2>
 
         <div className="flex flex-col gap-4">
           {careerData.map((step, index) => (
@@ -70,7 +77,11 @@ function CareerStepItem({
   };
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ type: "spring", stiffness: 50, damping: 20 }}
       className={clsx(
         "bg-white/3 border border-white/10 rounded-2xl overflow-hidden transition-all duration-300 hover:bg-white/5",
         isActive && "bg-white/8 border-white/20"
@@ -235,6 +246,6 @@ function CareerStepItem({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
