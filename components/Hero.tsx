@@ -2,6 +2,18 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Variants, Transition } from "framer-motion";
+
+const transition: Transition = {
+  type: "spring",
+  stiffness: 100,
+  damping: 10,
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition },
+};
 
 export default function Hero() {
   const containerVariants = {
@@ -21,19 +33,6 @@ export default function Hero() {
       opacity: 1,
       transition: {
         staggerChildren: 0.15,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 70,
-        damping: 20,
       },
     },
   };
