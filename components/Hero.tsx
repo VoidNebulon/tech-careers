@@ -90,7 +90,7 @@ export default function Hero() {
         {/* Cards Container */}
         <motion.div
           variants={cardContainerVariants}
-          className="flex flex-wrap justify-center items-stretch gap-14 w-full max-w-250 mb-16"
+          className="flex flex-wrap justify-center items-stretch gap-8 w-full max-w-250 mb-16"
         >
           <GlassCard
             title="Presentation"
