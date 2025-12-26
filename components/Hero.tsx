@@ -93,6 +93,10 @@ export default function Hero() {
           className="flex flex-wrap justify-center items-stretch gap-14 w-full max-w-250 mb-16"
         >
           <GlassCard
+            title="Presentation"
+            text="Access the complete information for in-depth guidance."
+          />
+          <GlassCard
             title="Resources List"
             text="Get all the essential resources to aid your learning."
           />
