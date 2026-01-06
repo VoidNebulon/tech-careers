@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Variants, Transition } from "framer-motion";
+import { useEffect, useState } from "react";
+import MinimalNavButton from "./MinimalNavButton";
 
 const transition: Transition = {
   type: "spring",
@@ -16,6 +18,26 @@ const itemVariants: Variants = {
 };
 
 export default function Hero() {
+  const [showNav, setShowNav] = useState(false);
+
+  // Show nav after scroll threshold
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) setShowNav(true);
+      else setShowNav(false);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const navVariants: Variants = {
+    hidden: { opacity: 0, y: -30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: "circInOut" },
+    },
+  };
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -39,11 +61,44 @@ export default function Hero() {
 
   return (
     <section className="relative w-full min-h-screen flex flex-col justify-center items-center px-5 py-2.5 overflow-hidden pt-15 md:pt-2.5">
+      {/* Glass Nav Bar */}
+      <motion.nav
+        variants={navVariants}
+        initial="hidden"
+        animate={showNav ? "visible" : "hidden"}
+        className="fixed top-5 left-1/2 -translate-x-1/2 z-50 w-[50%] max-w-6xl flex justify-between items-center px-6 py-2 backdrop-blur-xl bg-white/5 border border-white/20 rounded-full shadow-lg transition-all duration-500"
+      >
+        {/* Logo */}
+        <div className="flex items-center">
+          <Image
+            src="/images/pgc-logo.png"
+            alt="PGC Logo"
+            width={100}
+            height={90}
+          />
+        </div>
+
+        {/* Buttons */}
+        <div className="flex items-center gap-4">
+          <MinimalNavButton
+          text="Presentation"
+          link="https://pgc.edu/wp-content/uploads/2025/10/Presentation.pdf"
+          />
+          <MinimalNavButton
+          text="Resources List"
+          link="https://pgc.edu/wp-content/uploads/2024/10/ICS-Resources-by-PGC.pdf"
+          />
+          <MinimalNavButton
+          text="Universities List"
+          link="https://pgc.edu/wp-content/uploads/2025/10/Universities-list.pdf"
+          />
+        </div>
+      </motion.nav>
       {/* Background Image */}
       <motion.div
-        initial={{ opacity: 0, scale: 1.1 }}
+        initial={{ opacity: 0, scale: 1.7 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
+        transition={{ duration: 1.7, ease: "circInOut" }}
         className="absolute inset-0 z-0"
       >
         <Image
@@ -149,9 +204,6 @@ function GlassCard({
 function GradientButton({ link }: { link: string }) {
   return (
     <div className="group relative inline-block p-[1.5px] bg-linear-to-br from-[#a855f7] to-[#6366f1] rounded-xl cursor-pointer transition-transform duration-300 shadow-none hover:-translate-y-0.5 hover:scale-102 hover:shadow-[0_10px_20px_rgba(0,0,0,0.4)] active:scale-98">
-      {/* Blur effect */}
-      <div className="absolute -inset-0.5 bg-linear-to-br from-[#a855f7] to-[#6366f1] rounded-[14px] -z-10 opacity-0 blur-xl transition-opacity duration-400 group-hover:opacity-60" />
-
       <a
         href={link}
         target="_blank"
@@ -159,6 +211,22 @@ function GradientButton({ link }: { link: string }) {
         className="text-[15px] font-semibold py-2.5 px-6 rounded-[11px] border-none bg-[#0c0c0c] text-white cursor-pointer flex items-center gap-2 transition-colors duration-300 relative z-10 group-hover:bg-transparent no-underline"
       >
         Download
+      </a>
+    </div>
+  );
+}
+
+// Gradient button for nav
+function GradientNavButton({ link, text }: { link: string; text: string }) {
+  return (
+    <div className="group relative inline-block p-[1.5px] bg-linear-to-br from-[#a855f7] to-[#6366f1] rounded-4xl cursor-pointer transition-transform duration-300 shadow-none hover:-translate-y-0.5 hover:scale-102 hover:shadow-[0_10px_20px_rgba(0,0,0,0.4)] active:scale-98">
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[15px] font-semibold py-2 px-2.5 rounded-4xl border-none bg-[#0c0c0c] text-white cursor-pointer flex items-center gap-2 transition-colors duration-300 relative z-10 group-hover:bg-transparent no-underline"
+      >
+        {text}
       </a>
     </div>
   );
